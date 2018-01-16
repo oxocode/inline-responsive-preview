@@ -65,85 +65,87 @@
     display: inline-block; }
     .irp-breakpoint-list .irp-breakpoint-list-item .irp-breakpoint-list-item-link {
       display: inline-block;
-      width: 32px;
-      height: 32px;
-      background-image: url("../img/sprites.png");
+      width: 22px;
+      height: 22px;
       text-indent: -9999px;
       text-align: left;
       overflow: hidden; }
       .irp-breakpoint-list .irp-breakpoint-list-item .irp-breakpoint-list-item-link:focus {
-        outline: none; }
-      .irp-breakpoint-list .irp-breakpoint-list-item .irp-breakpoint-list-item-link:hover {
-        opacity: 0.8; }
+        outline: #e14d43; }
       .irp-breakpoint-list .irp-breakpoint-list-item .irp-breakpoint-list-item-link.icon-small {
-        background-position: 0 0;
-        width: 32px; }
+        background-image: url("../img/small.png");
+        background-size: cover; }
       .irp-breakpoint-list .irp-breakpoint-list-item .irp-breakpoint-list-item-link.icon-medium {
-        background-position: -48px 0;
-        width: 32px; }
+        background-image: url("../img/medium.png");
+        background-size: cover;
+        width: 18px; }
+      .irp-breakpoint-list .irp-breakpoint-list-item .irp-breakpoint-list-item-link.icon-new {
+        background-image: url("../img/new.png");
+        background-size: cover;
+        width: 21px; }
 
-#irp-container .ui-resizable {
+.irp-container .ui-resizable {
   position: relative; }
 
-#irp-container .ui-resizable-handle {
+.irp-container .ui-resizable-handle {
   position: absolute;
   font-size: 0.1px;
   display: block; }
 
-#irp-container .ui-resizable-disabled .ui-resizable-handle,
-#irp-container .ui-resizable-autohide .ui-resizable-handle {
+.irp-container .ui-resizable-disabled .ui-resizable-handle,
+.irp-container .ui-resizable-autohide .ui-resizable-handle {
   display: none; }
 
-#irp-container .ui-resizable-n {
+.irp-container .ui-resizable-n {
   cursor: n-resize;
   height: 7px;
   width: 100%;
   top: -5px;
   left: 0; }
 
-#irp-container .ui-resizable-s {
+.irp-container .ui-resizable-s {
   cursor: s-resize;
   height: 7px;
   width: 100%;
   bottom: -5px;
   left: 0; }
 
-#irp-container .ui-resizable-e {
+.irp-container .ui-resizable-e {
   cursor: e-resize;
   width: 7px;
   right: -5px;
   top: 0;
   height: 100%; }
 
-#irp-container .ui-resizable-w {
+.irp-container .ui-resizable-w {
   cursor: w-resize;
   width: 7px;
   left: -5px;
   top: 0;
   height: 100%; }
 
-#irp-container .ui-resizable-se {
+.irp-container .ui-resizable-se {
   cursor: se-resize;
   width: 12px;
   height: 12px;
   right: 1px;
   bottom: 1px; }
 
-#irp-container .ui-resizable-sw {
+.irp-container .ui-resizable-sw {
   cursor: sw-resize;
   width: 9px;
   height: 9px;
   left: -5px;
   bottom: -5px; }
 
-#irp-container .ui-resizable-nw {
+.irp-container .ui-resizable-nw {
   cursor: nw-resize;
   width: 9px;
   height: 9px;
   left: -5px;
   top: -5px; }
 
-#irp-container .ui-resizable-ne {
+.irp-container .ui-resizable-ne {
   cursor: ne-resize;
   width: 9px;
   height: 9px;

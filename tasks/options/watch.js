@@ -17,15 +17,6 @@ module.exports = {
 			debounceDelay: 500
 		}
 	},
-	img: {
-		files: [
-			'assets/img/**/*.{png}'
-		],
-		tasks: ['imagemin'],
-		options: {
-			debounceDelay: 500
-		}
-	},
 	svg: {
 		files: [
 			'assets/img/**/*.{svg}'

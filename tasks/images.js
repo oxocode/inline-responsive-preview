@@ -1,3 +1,3 @@
 module.exports = function( grunt ) {
-	grunt.registerTask( 'images', [ 'imagemin', 'svgmin' ] );
+	grunt.registerTask( 'images', [ 'imagemin' ] );
 };
