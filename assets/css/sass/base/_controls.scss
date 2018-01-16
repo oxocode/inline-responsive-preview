@@ -1,0 +1,8 @@
+.irp-controls-container {
+	@include z-index(middle);
+	display: block;
+	margin: 32px 0 0;
+	padding: 10px;
+	background: transparent;
+	color: $color--silver-light;
+}

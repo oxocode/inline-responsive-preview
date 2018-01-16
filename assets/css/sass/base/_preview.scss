@@ -1,0 +1,59 @@
+////
+/// Helpers.
+////
+.irp #wpwrap {
+	width: auto;
+	padding-right: 0;
+}
+
+.irp #poststuff,
+.irp #post-body-content {
+	min-width: 0 !important;
+}
+
+.irp-container {
+	height: 100%;
+	width: 0;
+	position: fixed;
+	right: 0;
+	top: 0;
+	text-align: center;
+}
+
+.irp-iframe {
+	border-left: 1px solid $color--silver;
+	box-shadow: 0 0 1em $color--silver;
+	height: 133%;
+	transform: scale(0.75, 0.75);
+	transform-origin: top left;
+	width: 133%;
+}
+
+.irp-close {
+	@include z-index(tippy);
+	position: absolute;
+	top: 3em;
+	right: 1em;
+	padding: 0.5em;
+	background-color: $color--red;
+	border-radius: $border--radius;
+	color: $color--white;
+	cursor: pointer;
+	&.media-modal-close {
+		width: 140px;
+		height: 20px;
+		margin: 0 0 0 0.5em;
+		vertical-align: text-bottom;
+		&:hover {
+			background-color: $color--black;
+		}
+	}
+}
+
+.irp-hidden-iframe {
+	display: none;
+}
+
+.animate {
+	transition: width 0.8s ease-out;
+}

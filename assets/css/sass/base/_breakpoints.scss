@@ -1,0 +1,40 @@
+.irp-breakpoint-list {
+	@include z-index(middle);
+	display: block;
+	margin: 1em 0 0;
+	padding: 1em;
+	background: transparent;
+	color: $color--silver-light;
+
+	.irp-breakpoint-list-item {
+		display: inline-block;
+
+		.irp-breakpoint-list-item-link {
+			display: inline-block;
+			width: 32px;
+			height: 32px;
+			background-image: url("../img/sprites.png");
+			text-indent: -9999px;
+			text-align: left;
+			overflow: hidden;
+
+			&:focus {
+				outline: none;
+			}
+
+			&:hover {
+				opacity: 0.8;
+			}
+
+			&.icon-small {
+				background-position: 0 0;
+				width: 32px;
+			}
+
+			&.icon-medium {
+				background-position: -48px 0;
+				width: 32px;
+			}
+		}
+	}
+}
