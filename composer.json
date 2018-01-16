@@ -1,0 +1,31 @@
+{
+  "name": "oxocode/inline-responsive-preview",
+  "description": "Allows inline responsive previewing of posts from the admin edit screen",
+  "version": "1.0.0",
+  "type": "wordpress-plugin",
+  "license": "GPL2+",
+  "homepage": "http://oxocode.com/",
+  "authors": [
+    {
+      "name": "Courtney Ivey",
+	  "email": "oxocodes@gmail.com",
+      "homepage": "http://oxocode.com/",
+	  "role": "Developer"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/oxocode/inline-responsive-preview/issues",
+    "source": "https://github.com/oxocode/inline-responsive-preview"
+  },
+  "require": {
+    "composer/installers": "~1.0"
+  },
+  "require-dev": {
+    "wp-coding-standards/wpcs": "0.13.0",
+    "phpunit/phpunit": "~4.0"
+  },
+  "scripts": {
+    "post-install-cmd": "\"vendor/bin/phpcs\" --config-set installed_paths vendor/wp-coding-standards/wpcs",
+    "post-update-cmd": "\"vendor/bin/phpcs\" --config-set installed_paths vendor/wp-coding-standards/wpcs"
+  }
+}

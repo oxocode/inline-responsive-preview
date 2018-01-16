@@ -1,0 +1,20 @@
+////
+/// Variables.
+////
+
+// Colors.
+$color--red: #e14d43;
+$color--white: #fafafa;
+$color--black: #222;
+$color--silver: #ccc;
+$color--silver-light: rgba(255, 255, 255, 0.8);
+
+// Borders.
+$border--radius: 3px;
+
+// Z-index map.
+$z-index: (
+	default: 0,
+	tippy: 99999,
+	middle: 1000
+);

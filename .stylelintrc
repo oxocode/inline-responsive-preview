@@ -1,0 +1,39 @@
+{
+	"extends": "stylelint-config-wordpress/scss",
+	"plugins": [
+		"stylelint-scss",
+		"stylelint-declaration-use-variable"
+	],
+	"rules": {
+		"at-rule-empty-line-before": null,
+		"at-rule-name-case": "lower",
+		"color-hex-case": "lower",
+		"color-no-invalid-hex": true,
+		"comment-empty-line-before": "always",
+		"comment-no-empty": true,
+		"declaration-no-important": null,
+		"max-nesting-depth": 4,
+		"function-url-quotes": null,
+		"selector-attribute-quotes": null,
+		"max-line-length": null,
+		"rule-empty-line-before": null,
+		"length-zero-no-unit": true,
+		"no-duplicate-selectors": true,
+		"no-empty-source": true,
+		"string-quotes": "double",
+		"value-keyword-case": "lower",
+		"declaration-property-unit-whitelist": {
+			"line-height": [
+				"px",
+				"em",
+				"rem"
+			]
+		},
+		"sh-waqar/declaration-use-variable": [
+			[
+				"color",
+				"z-index",
+			]
+		]
+	}
+}
