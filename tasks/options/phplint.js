@@ -5,7 +5,6 @@ module.exports = {
 		stderr: true
 	},
 	irp: [
-		'*.php',
-		'!vendor/**/*.php'
+		'*.php'
 	]
 };

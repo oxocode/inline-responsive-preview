@@ -12,13 +12,13 @@
 		</testsuite>
 
 		<testsuite name="all">
-			<directory prefix="test-" suffix=".php">./wp-content/inline-responsive-preview/tests/</directory>
+			<directory prefix="test-" suffix=".php">./wp-content/plugins/inline-responsive-preview/tests/</directory>
 		</testsuite>
 	</testsuites>
 	<filter>
 		<whitelist>
 			<!-- list all directories to be considered during coverage -->
-			<directory suffix=".php">./wp-content/inline-responsive-preview/</directory>
+			<directory suffix=".php">./wp-content/plugins/inline-responsive-preview/</directory>
 			<exclude>
 				<directory>./tests/</directory>
 				<directory>./vendor/</directory>

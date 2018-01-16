@@ -2,7 +2,7 @@
  * Inline Responsive Preview.
  */
 
-/* global jQuery, InlineResponsivePreview, resizable */
+/* global jQuery, InlineResponsivePreview */
 
 var IRP = IRP || {};
 
@@ -20,27 +20,17 @@ IRP.previews = (function( $ ) {
 		addBreakpointListener,
 		triggerBreakpoint,
 		animationDuration = 500,
-		reloadTimer,
 		resizeTimer,
-		autoClicking = false,
 		body = $( 'body' ),
 		windowWidth = $( window ).width(),
 		editorContainer = $( '#wpwrap' ),
-		dfwContainer = $('.has-dfw'),
-		loadingFrame = $( '.irp-hidden-iframe' ),
 		previewContainer = $( '.irp-container' ),
 		previewFrame = $( '.irp-iframe' ),
 		previewButton = $( '#post-preview' ),
-		postBody = $( '#post-body' ),
 		previewFrameName,
-		iframeScrollLocation,
-		oldPreviewFrame,
-		closeButton,
 		hiddenFrame,
-		controlsContainer,
 		wpPublishingActions = document.getElementById( 'minor-publishing-actions' ),
-		breakpointContainer,
-		resizeTimeout;
+		breakpointContainer;
 
 	/**
 	 * Set up the handlers to activate responsive preview.
@@ -121,7 +111,6 @@ IRP.previews = (function( $ ) {
 	/**
 	 * Set the container width. Happens after a window resize or when the preview frame opens initially.
 	 *
-	 * @param {bool} animate Whether this is the initial opening of the preview frame.
 	 * @param {string} size Width of preview frame.
 	 */
 	setContainerWidth = function( size ) {
@@ -212,12 +201,15 @@ IRP.previews = (function( $ ) {
 		var smallLink = '<li class="irp-breakpoint-list-item"><a class="irp-breakpoint-list-item-link icon-small"' +
 			' href="#" target="irp" data-breakpoint="360">XS</a></li>',
 			mediumLink = '<li class="irp-breakpoint-list-item"><a class="irp-breakpoint-list-item-link icon-medium"' +
-				' href="#" target="irp" data-breakpoint="668">MD</a></li>';
+				' href="#" target="irp" data-breakpoint="668">MD</a></li>',
+			newLink = '<li class="irp-breakpoint-list-item"><a class="irp-breakpoint-list-item-link icon-new"' +
+				' href="#" target="blank">New</a></li>';
 		breakpointContainer = document.createElement( 'ul' );
 		breakpointContainer.setAttribute( 'class', 'irp-breakpoint-list' );
 		wpPublishingActions.append( breakpointContainer );
 		breakpointContainer.innerHTML = smallLink;
 		breakpointContainer.innerHTML += mediumLink;
+		breakpointContainer.innerHTML += newLink;
 		addBreakpointListener();
 	};
 

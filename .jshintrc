@@ -14,13 +14,8 @@
   "unused": "vars",
   "browser": true,
   "globals": {
-    "_": false,
-    "Backbone": false,
     "jQuery": false,
-    "JSON": false,
-    "wp": false,
-    "Promise": false,
-    "console": false,
+    "console": false
   },
   "predef": [
     "require",

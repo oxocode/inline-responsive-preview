@@ -2,8 +2,6 @@
  * IRP - Utilities.
  */
 
-/* global jQuery */
-
 var IRP = IRP || {};
 
 IRP.utils = (function() {

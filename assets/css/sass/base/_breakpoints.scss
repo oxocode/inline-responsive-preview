@@ -11,29 +11,31 @@
 
 		.irp-breakpoint-list-item-link {
 			display: inline-block;
-			width: 32px;
-			height: 32px;
-			background-image: url("../img/sprites.png");
+			width: 22px;
+			height: 22px;
 			text-indent: -9999px;
 			text-align: left;
 			overflow: hidden;
 
 			&:focus {
-				outline: none;
-			}
-
-			&:hover {
-				opacity: 0.8;
+				outline: $color--red;
 			}
 
 			&.icon-small {
-				background-position: 0 0;
-				width: 32px;
+				background-image: url("../img/small.png");
+				background-size: cover;
 			}
 
 			&.icon-medium {
-				background-position: -48px 0;
-				width: 32px;
+				background-image: url("../img/medium.png");
+				background-size: cover;
+				width: 18px;
+			}
+
+			&.icon-new {
+				background-image: url("../img/new.png");
+				background-size: cover;
+				width: 21px;
 			}
 		}
 	}

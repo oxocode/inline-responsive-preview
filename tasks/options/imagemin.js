@@ -1,14 +1,14 @@
 module.exports = {
 	options: {
 		optimizationLevel: 3,
-		svgoPlugins: [{ removeViewBox: false }]
+		svgoPlugins: [ { removeViewBox: false } ]
 	},
 	irp: {
-		files: [{
+		files: [ {
 			expand: true,
 			cwd: 'assets/img/src/',
-			src: ['**/*.{png}'],
+			src: [ '*.png' ],
 			dest: 'assets/img/'
-		}]
+		} ]
 	}
 };

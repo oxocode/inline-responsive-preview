@@ -1,3 +1,5 @@
 module.exports = {
-	irp: [ 'release/<%= pkg.version %>' ]
+	build: {
+		src: [ 'release/<%= pkg.version %>' ]
+	}
 };

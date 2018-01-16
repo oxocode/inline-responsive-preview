@@ -1,3 +1,3 @@
 module.exports = function( grunt ) {
-	grunt.registerTask( 'php', ['phpcs', 'phplint'] );
+	grunt.registerTask( 'php', [ 'phplint', 'phpcs' ] );
 };
