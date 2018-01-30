@@ -4,10 +4,10 @@
 
 var IRP = IRP || {};
 
-IRP.utils = (function() {
+IRP.utils = ( function() {
 	'use strict';
 
-	var _$, addEventListener, each, init, preventDefault, ready;
+	var _$, addEventListener, each, addClass, removeClass, init, preventDefault, ready, removeElement;
 
 	init = function() {};
 
@@ -15,18 +15,31 @@ IRP.utils = (function() {
 		return document.querySelectorAll( selector );
 	};
 
-	addEventListener = function( el, eventName, handler ) {
-		if ( el.addEventListener ) {
-			el.addEventListener( eventName, handler );
+	addEventListener = function( element, eventName, handler ) {
+		if ( element.addEventListener ) {
+			element.addEventListener( eventName, handler );
 		} else {
-			el.attachEvent( 'on' + eventName, function() {
-				handler.call( el );
+			element.attachEvent( 'on' + eventName, function() {
+				handler.call( element );
 			} );
 		}
 	};
 
+	addClass = function( element, className ) {
+		if ( ! element.classList.contains( className ) ) {
+			element.classList.add( className );
+		}
+	};
+
+	removeClass = function( element, className ) {
+		if ( element.classList.contains( className ) ) {
+			element.classList.remove( className );
+		}
+	};
+
 	each = function( elements, fn ) {
-		for ( var i = 0; i < elements.length; i ++ ) {
+		var i = 0;
+		for ( i < elements.length; i++; ) {
 			fn( elements[ i ], i );
 		}
 	};
@@ -56,17 +69,25 @@ IRP.utils = (function() {
 		}
 	};
 
+	removeElement = function( elementId ) {
+		var element = document.getElementsByClassName( elementId );
+		element.parentNode.removeChild( element );
+	};
+
 	return {
 		init: init,
 		_$: _$,
 		addEventListener: addEventListener,
 		each: each,
+		removeClass: removeClass,
+		addClass: addClass,
 		preventDefault: preventDefault,
-		ready: ready
+		ready: ready,
+		removeElement: removeElement
 	};
 
-} )( IRP );
+} ( IRP ) );
 
-(function() {
+( function() {
 	IRP.utils.init();
-})( IRP );
+} ( IRP ) );
