@@ -1,14 +1,34 @@
 ////
 /// Helpers.
 ////
-.irp #wpwrap {
-	width: auto;
-	padding-right: 0;
-}
+.irp {
+	#wpwrap {
+		width: auto;
+		padding-right: 0;
+	}
 
-.irp #poststuff,
-.irp #post-body-content {
-	min-width: 0 !important;
+	&.small {
+		#wpwrap {
+			padding-right: 360px;
+		}
+		.irp-container {
+			width: 360px;
+		}
+	}
+
+	&.medium {
+		#wpwrap {
+			padding-right: 660px;
+		}
+		.irp-container {
+			width: 660px;
+		}
+	}
+
+	#poststuff,
+	#post-body-content {
+		min-width: 0 !important;
+	}
 }
 
 .irp-container {
@@ -18,6 +38,8 @@
 	right: 0;
 	top: 0;
 	text-align: center;
+	transition: width 0.5s ease-in-out;
+	@include z-index(middle);
 }
 
 .irp-iframe {
@@ -50,10 +72,22 @@
 	}
 }
 
-.irp-hidden-iframe {
-	display: none;
+.irp-new {
+	padding: 0.5em;
+	background-color: $color--red;
+	border-radius: $border--radius;
+	color: $color--white;
+	cursor: pointer;
+	&.media-modal-close {
+		width: auto;
+		height: 20px;
+		margin: 0 0 0 0.5em;
+		vertical-align: text-bottom;
+		&:hover {
+			background-color: $color--black;
+		}
+	}
 }
-
-.animate {
-	transition: width 0.8s ease-out;
+.full-width {
+	width: 100%;
 }
