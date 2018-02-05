@@ -6,31 +6,29 @@
 
 var IRP = IRP || {};
 
-IRP.previews = (function( $ ) {
+IRP.previews = ( function( $ ) {
 	'use strict';
 
 	var init,
 		initPreview,
+		addCloseButton,
 		checkPreview,
 		closePreview,
-		triggerPreview,
-		setContainerWidth,
-		sizeiframe,
+		setBreakpoint,
+		resetBreakpoint,
 		addControls,
+		removeControls,
 		addBreakpointListener,
+		removeBreakpointListener,
 		triggerBreakpoint,
-		animationDuration = 500,
-		resizeTimer,
-		body = $( 'body' ),
-		windowWidth = $( window ).width(),
-		editorContainer = $( '#wpwrap' ),
-		previewContainer = $( '.irp-container' ),
-		previewFrame = $( '.irp-iframe' ),
-		previewButton = $( '#post-preview' ),
+		previewFrame,
 		previewFrameName,
-		hiddenFrame,
-		wpPublishingActions = document.getElementById( 'minor-publishing-actions' ),
-		breakpointContainer;
+		breakpointContainer,
+		body = document.body,
+		editorContainer = $( '#wpwrap' ),
+		previewContainer = document.getElementsByClassName( 'irp-container' ),
+		previewButton = document.getElementById( 'post-preview' ),
+		wpPublishingActions = document.getElementById( 'minor-publishing-actions' );
 
 	/**
 	 * Set up the handlers to activate responsive preview.
@@ -40,9 +38,10 @@ IRP.previews = (function( $ ) {
 			initPreview();
 		} );
 
-		$( 'a[id!="post-preview"][href$="preview=true"]' ).on( 'click.irp', function() {
+		$( 'a[id!="post-preview"][href$="preview=true"]' ).on( 'click', function() {
 			IRP.utils.preventDefault();
 			previewButton.click();
+			console.log( 'Preview Button clicked.' );
 		} );
 	};
 
@@ -53,45 +52,40 @@ IRP.previews = (function( $ ) {
 
 		if ( ! checkPreview() ) {
 
-			body.addClass( 'folded' );
-			body.addClass( 'irp' );
+			IRP.utils.addClass( body, 'folded' );
+			IRP.utils.addClass( body, 'irp' );
 
 			previewFrameName = $( '#post-preview' ).attr( 'target' ) || 'wp-preview';
-			previewFrame = $( '<iframe class="irp-iframe"></iframe>' ).attr( 'name', previewFrameName );
-			previewContainer = $( '<div class="irp-container"></div>' ).append( previewFrame );
+
+			previewFrame = document.createElement( 'iframe' );
+			previewFrame.setAttribute( 'class', 'irp-iframe' );
+			previewFrame.setAttribute( 'name', previewFrameName );
+
+			console.log( previewFrame );
+
+			previewContainer = document.createElement( 'div' );
+			previewContainer.setAttribute( 'class', 'irp-container' );
+			previewContainer.append( previewFrame );
 
 			editorContainer.before( previewContainer );
 
-			previewContainer.addClass( 'loading' );
-
-			previewContainer.resizable( {
-				minWidth: 420,
-				handles: 'w',
-				alsoResize: '#wpwrap',
-				start: function() {
-					previewContainer.css( 'z-index', '' );
-				},
-				resize: function( event, ui ) {
-					editorContainer.css( 'padding-right', ui.size.width );
-					window.scrollTop();
-				},
-				stop: function() {
-					previewContainer.css( 'z-index', '1000' );
-				}
-			} );
-
-			setContainerWidth( 360 );
+			setBreakpoint( 'small' );
 			addControls();
 
-			previewFrame.on( 'load.irp', function() {
-				previewContainer.removeClass( 'loading' );
-				previewFrameName = previewFrame.attr( 'name' );
-				previewFrame.unbind( 'load.irp' ).removeAttr( 'name' );
-				hiddenFrame = $( '<iframe class="irp-hidden-frame"></iframe>' );
-				hiddenFrame.attr( 'name', previewFrameName );
-				previewContainer.append( hiddenFrame );
-			} );
 		}
+	};
+
+	addCloseButton = function() {
+		previewContainer
+				.append(
+					$( '<a class="irp-close media-modal-close">Close Preview<span' +
+						' class="media-modal-icon"></span></a>' )
+						.on( 'click.irp', function( e ) {
+							IRP.utils.preventDefault( e );
+							closePreview();
+						} )
+						.attr( 'title', InlineResponsivePreview.close_label )
+				);
 	};
 
 	/**
@@ -100,12 +94,11 @@ IRP.previews = (function( $ ) {
 	 */
 	checkPreview = function() {
 
-		var preview = false;
-		if ( body.hasClass( 'irp' ) ) {
-			preview = true;
+		if ( document.body.classList.contains( 'irp' ) ) {
+			return true;
 		}
 
-		return preview;
+		return false;
 	};
 
 	/**
@@ -113,56 +106,16 @@ IRP.previews = (function( $ ) {
 	 *
 	 * @param {string} size Width of preview frame.
 	 */
-	setContainerWidth = function( size ) {
-
-		var previewWidth = 480,
-			editorWidthPx;
+	setBreakpoint = function( size ) {
 
 		if ( size ) {
-			previewWidth = size;
+
+			resetBreakpoint();
+
+			if ( ! document.body.classList.contains( size ) ) {
+				IRP.utils.addClass( body, size );
+			}
 		}
-
-		previewContainer.css( 'left', windowWidth ).show();
-		editorWidthPx = Math.round( windowWidth - previewWidth );
-
-		previewContainer.css( 'width', previewWidth );
-
-		editorContainer.animate(
-			{ 'padding-right': previewWidth },
-			{
-				duration: animationDuration,
-				queue: false
-			}
-		);
-
-		previewContainer.animate(
-			{ 'left': editorWidthPx },
-			{
-				duration: animationDuration,
-				queue: false,
-				complete: function() {}
-			}
-		);
-
-		previewContainer
-			.append(
-				$( '<a class="irp-close media-modal-close">Close Preview<span' +
-					' class="media-modal-icon"></span></a>' )
-					.on( 'click.irp', function( e ) {
-						IRP.utils.preventDefault( e );
-						closePreview();
-					} )
-					.attr( 'title', InlineResponsivePreview.close_label )
-			)
-			.css( 'z-index', '1000' );
-	};
-
-	sizeiframe = function( size ) {
-			$( '.irp-container' ).width( size );
-	};
-
-	triggerPreview = function( size ) {
-		setContainerWidth( size );
 	};
 
 	/**
@@ -170,49 +123,65 @@ IRP.previews = (function( $ ) {
 	 */
 	closePreview = function() {
 
-		$( document ).off( '.irp' );
-		$( window ).off( '.irp' );
-		body.removeClass( 'irp' );
-		body.removeClass( 'folded' );
-		$( '.irp-close' ).hide();
-		$('.irp-breakpoint-list').hide();
+		// Remove body classes.
+		IRP.utils.removeClass( body, 'irp' );
+		IRP.utils.removeClass( body, 'folded' );
 
-		previewContainer.animate(
-			{ 'left': $( window ).width() },
-			{
-				duration: animationDuration,
-				queue: false,
-				complete: function() {}
-			}
-		);
-
-		editorContainer.animate(
-			{ 'padding-right': '0' },
-			{
-				duration: animationDuration,
-				queue: false
-			}
-		);
+		// Remove the preview container.
 		previewContainer.remove();
-		clearTimeout( resizeTimer );
+
+		resetBreakpoint();
+		removeControls();
+
+		return false;
 	};
 
+	/**
+	 * Removes/resets breakpoint size classe(s), if they exist.
+	 */
+	resetBreakpoint = function() {
+		if ( document.body.classList.contains( 'small' ) ) {
+			IRP.utils.removeClass( body, 'small' );
+		}
+		if ( document.body.classList.contains( 'medium' ) ) {
+			IRP.utils.removeClass( body, 'medium' );
+		}
+	};
+
+	/**
+	 * Add breakpoint list to Publishing Actions container.
+	 */
 	addControls = function() {
 		var smallLink = '<li class="irp-breakpoint-list-item"><a class="irp-breakpoint-list-item-link icon-small"' +
-			' href="#" target="irp" data-breakpoint="360">XS</a></li>',
+			' href="#" target="irp" data-breakpoint="small">SM</a></li>',
 			mediumLink = '<li class="irp-breakpoint-list-item"><a class="irp-breakpoint-list-item-link icon-medium"' +
-				' href="#" target="irp" data-breakpoint="668">MD</a></li>',
-			newLink = '<li class="irp-breakpoint-list-item"><a class="irp-breakpoint-list-item-link icon-new"' +
-				' href="#" target="blank">New</a></li>';
+				' href="#" target="irp" data-breakpoint="medium">MD</a></li>';
+
+		// Build breakpoint container.
 		breakpointContainer = document.createElement( 'ul' );
 		breakpointContainer.setAttribute( 'class', 'irp-breakpoint-list' );
 		wpPublishingActions.append( breakpointContainer );
 		breakpointContainer.innerHTML = smallLink;
 		breakpointContainer.innerHTML += mediumLink;
-		breakpointContainer.innerHTML += newLink;
+
 		addBreakpointListener();
+		addCloseButton();
 	};
 
+	/**
+	 * Remove breakpoint list from Publishing Actions container.
+	 */
+	removeControls = function() {
+
+		removeBreakpointListener();
+		$( '.irp-close' ).remove();
+		$( '.irp-breakpoint-list' ).remove();
+
+	};
+
+	/**
+	 * Add breakpoint listener to trigger iframe resize.
+	 */
 	addBreakpointListener = function() {
 		var breakpoint = document.getElementsByClassName( 'irp-breakpoint-list-item-link' ),
 			i;
@@ -221,26 +190,39 @@ IRP.previews = (function( $ ) {
 		}
 	};
 
-	triggerBreakpoint = function( e ) {
-		var size = e.target.getAttribute( 'data-breakpoint' );
-		e.preventDefault();
-		setContainerWidth( size );
+	/**
+	 * Remove breakpoint listener that triggers iframe resize.
+	 */
+	removeBreakpointListener = function() {
+		var breakpoint = document.getElementsByClassName( 'irp-breakpoint-list-item-link' ),
+			i;
+		for ( i = 0; i < breakpoint.length; i++ ) {
+			breakpoint[i].removeEventListener( 'click', triggerBreakpoint );
+		}
+	};
+
+	/**
+	 * Triggers the resizing of the iframe, based on the breakpoint size.
+	 */
+	triggerBreakpoint = function( element ) {
+		var size = element.target.getAttribute( 'data-breakpoint' );
+
+		element.preventDefault();
+		setBreakpoint( size );
 	};
 
 	return {
 		init: init,
 		initPreview: initPreview,
-		checkPreview: checkPreview,
-		triggerPreview: triggerPreview,
-		closePreview: closePreview,
-		setContainerWidth: setContainerWidth,
-		sizeiframe: sizeiframe,
 		addControls: addControls,
-		addBreakpointListener: addBreakpointListener,
+		checkPreview: checkPreview,
+		closePreview: closePreview,
+		setBreakpoint: setBreakpoint,
+		resetBreakpoint: resetBreakpoint,
 		triggerBreakpoint: triggerBreakpoint
 	};
-})( jQuery, IRP );
+} ( jQuery, IRP ) );
 
-(function() {
+( function() {
 	IRP.previews.init();
-})( IRP );
+} ( IRP ) );
