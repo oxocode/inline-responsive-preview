@@ -51,7 +51,7 @@ function enqueue_admin_scripts( $hook ) {
 
 	wp_register_script(
 		'inline-responsive-preview-js',
-		IRP_PLUGIN_URL . 'assets/js/irp.js',
+		IRP_PLUGIN_URL . 'assets/js/irp.min.js',
 		[
 			'jquery',
 			'jquery-ui-resizable',
