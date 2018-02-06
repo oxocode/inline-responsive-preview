@@ -17,9 +17,6 @@
     "issues": "https://github.com/oxocode/inline-responsive-preview/issues",
     "source": "https://github.com/oxocode/inline-responsive-preview"
   },
-  "require": {
-    "composer/installers": "~1.0"
-  },
   "require-dev": {
     "wp-coding-standards/wpcs": "0.13.0",
     "phpunit/phpunit": "~4.0"
