@@ -3,7 +3,7 @@
  * Base unit test class for Inline Responsive Preview.
  * WP Unit Testing.
  *
- * @package irp
+ * @package IRP
  */
 class IRP_TestCase extends WP_UnitTestCase {
 

@@ -9,52 +9,50 @@
  * Setup IRP Core functions.
  */
 function setup() {
-	$errors = [];
-
 	check_wp_version();
 
 	add_action( 'admin_init', __NAMESPACE__ . '\\admin_irp_init' );
-
-	if ( $errors ) {
-		return add_action( 'admin_notices', [ __NAMESPACE__ . '\\admin_notices' ] );
-	}
 
 	add_post_type_support( 'post', 'inline-responsive-preview' );
 	add_post_type_support( 'page', 'inline-responsive-preview' );
 }
 
 /**
- * Errors to display in admin notice.
-*/
-function error( $message ) {
-	$errors[] = $message;
-}
-
-/**
- * Display admin notice for errors.
- */
-function admin_notices() {
-	foreach ( $errors as $error ) {
-		echo '<div class="error"><p>' . $error . '</p></div>';
-	}
-}
-
-/**
  * Check WP Core Version based on WP_MIN_VERSION constant.
  */
 function check_wp_version() {
-	include ABSPATH . WPINC . '/version.php';
 
-	$wp_version = str_replace( '-src', '', $wp_version );
+	$wp_version = (int) get_bloginfo( 'version' );
 
-	if ( version_compare( $wp_version, WP_MIN_VERSION, '<' ) ) {
-		$error( sprintf(
-			/* translators: 1: This plugin 2: WordPress version */
-			__( '%1$s requires WordPress version %2$s.', 'inline-responsive-preview' ),
-			'<strong>' . __( 'Inline Responsive Preview', 'inline-responsive-preview' ) . '</strong>',
-			WP_MIN_VERSION
-		) );
+	if ( version_compare( (int) 'WP_MIN_VERSION', $wp_version, '>' ) ) {
+		return add_action( 'admin_notices', __NAMESPACE__ . '\\wp_min_version_error' );
 	}
+}
+
+/**
+ * Returns admin notice for WP minimum version error.
+ */
+function wp_min_version_error() {
+	$class = 'notice notice-error';
+	$message = sprintf(
+		'Inline Responsive Preview requires WordPress version %1$s.',
+		WP_MIN_VERSION
+	);
+
+	printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), esc_html( $message ) );
+}
+
+/**
+ * Returns admin notice for WP minimum version error.
+ */
+function wp_success() {
+	$class = 'notice notice-success';
+	$message = sprintf(
+		'Inline Responsive Preview requires WordPress version %1$s.',
+		WP_MIN_VERSION
+	);
+
+	printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), esc_html( $message ) );
 }
 
 /**
@@ -100,8 +98,10 @@ function enqueue_admin_scripts( $hook ) {
 		IRP_VERSION
 	);
 
+	$closelabel = __( 'Close', 'inline-responsive-preview' );
+
 	$js_strings = [
-		'close_label' => __( 'Close', 'inline-responsive-preview' ),
+		'close_label' => $closelabel,
 	];
 
 	wp_localize_script(
@@ -122,6 +122,8 @@ function enqueue_admin_scripts( $hook ) {
 
 /**
  * Check post type support for IRP.
+ *
+ * @param int $id Post ID.
  */
 function supports_irp( $id = null ) {
 	$post = get_post( $id );
@@ -133,7 +135,7 @@ function supports_irp( $id = null ) {
 	$post_type_object = get_post_type_object( $post->post_type );
 
 	if (
-		$post->ID !== (int) get_option( 'page_for_posts' ) &&
+		(int) get_option( 'page_for_posts' ) !== $post->ID &&
 		post_type_supports( $post->post_type, 'inline-responsive-preview' ) &&
 		current_user_can( 'edit_post', $post->ID )
 	) {
@@ -141,11 +143,4 @@ function supports_irp( $id = null ) {
 	}
 
 	return false;
-}
-
-/**
- * Returns response for IRP post type support.
- */
-function has_irp() {
-	return __NAMESPACE__ . supports_fee();
 }

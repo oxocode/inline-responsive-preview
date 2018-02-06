@@ -2,6 +2,7 @@ module.exports = function( grunt ) {
 
   'use strict';
   var loadConfig, config;
+
   // Show elapsed time
   require( 'time-grunt' )( grunt );
 

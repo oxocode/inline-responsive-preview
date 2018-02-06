@@ -1,9 +1,15 @@
 <?php
 /**
  * Inline Responsive Preview - Constants.
+ *
+ * @package IRP
  */
+
 namespace IRP;
 
+/**
+ * Define constants.
+ */
 function define_constants() {
 
 	// IRP Folder URL.
@@ -22,4 +28,4 @@ function define_constants() {
 	}
 
 }
-add_action( 'init', __NAMESPACE__ . '\\define_constants' );
+add_action( 'admin_init', __NAMESPACE__ . '\\define_constants' );
