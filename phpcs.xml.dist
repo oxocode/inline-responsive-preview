@@ -14,7 +14,6 @@
 	</rule>
 	<rule ref="WordPress-Extra">
 		<exclude name="WordPress.Files.FileName.UnderscoresNotAllowed"/>
-		<exclude name="WordPress.PHP.DisallowAlternativePHPTags"/>
 	</rule>
 	<rule ref="WordPress.Files.FileName">
 		<severity>0</severity>
