@@ -28,4 +28,4 @@ function define_constants() {
 	}
 
 }
-add_action( 'init', __NAMESPACE__ . '\\define_constants' );
+add_action( 'admin_init', __NAMESPACE__ . '\\define_constants' );
