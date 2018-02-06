@@ -20,6 +20,8 @@
   "predef": [
     "require",
     "define",
-    "escape"
+    "escape",
+    "module",
+    "process"
   ]
 }
