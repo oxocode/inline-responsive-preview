@@ -21,7 +21,6 @@ function setup() {
  * Check WP Core Version based on WP_MIN_VERSION constant.
  */
 function check_wp_version() {
-
 	$wp_version = (int) get_bloginfo( 'version' );
 
 	if ( version_compare( (int) 'WP_MIN_VERSION', $wp_version, '>' ) ) {
@@ -33,7 +32,7 @@ function check_wp_version() {
  * Returns admin notice for WP minimum version error.
  */
 function wp_min_version_error() {
-	$class = 'notice notice-error';
+	$class   = 'notice notice-error';
 	$message = sprintf(
 		'Inline Responsive Preview requires WordPress version %1$s.',
 		WP_MIN_VERSION
@@ -46,7 +45,7 @@ function wp_min_version_error() {
  * Returns admin notice for WP minimum version error.
  */
 function wp_success() {
-	$class = 'notice notice-success';
+	$class   = 'notice notice-success';
 	$message = sprintf(
 		'Inline Responsive Preview requires WordPress version %1$s.',
 		WP_MIN_VERSION
@@ -71,7 +70,6 @@ function admin_irp_init() {
  * @param string $hook The add/edit post admin page.
  */
 function enqueue_admin_scripts( $hook ) {
-
 	if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 		return;
 	}
@@ -82,7 +80,7 @@ function enqueue_admin_scripts( $hook ) {
 
 	wp_register_script(
 		'inline-responsive-preview-js',
-		IRP_PLUGIN_URL . 'assets/js/irp.min.js',
+		IRP_PLUGIN_URL . 'assets/js/irp.js',
 		[
 			'jquery',
 			'jquery-ui-resizable',
@@ -114,7 +112,7 @@ function enqueue_admin_scripts( $hook ) {
 	if (
 		is_admin() &&
 		supports_irp()
-		) {
+	) {
 		wp_enqueue_script( 'inline-responsive-preview-js' );
 		wp_enqueue_style( 'inline-responsive-preview-css' );
 	}
@@ -124,6 +122,8 @@ function enqueue_admin_scripts( $hook ) {
  * Check post type support for IRP.
  *
  * @param int $id Post ID.
+ *
+ * @return bool
  */
 function supports_irp( $id = null ) {
 	$post = get_post( $id );
