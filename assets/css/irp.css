@@ -37,9 +37,9 @@
   width: 133%; }
 
 .irp-close {
-  z-index: 30000;
+  z-index: 99999;
   position: absolute;
-  top: 5em;
+  top: 3em;
   right: 1em;
   padding: 0.5em;
   background-color: #e14d43;
