@@ -37,9 +37,9 @@
   width: 133%; }
 
 .irp-close {
-  z-index: 99999;
+  z-index: 30000;
   position: absolute;
-  top: 3em;
+  top: 5em;
   right: 1em;
   padding: 0.5em;
   background-color: #e14d43;
@@ -104,10 +104,6 @@
         background-image: url("../img/medium.png");
         background-size: cover;
         width: 18px; }
-      .irp-breakpoint-list .irp-breakpoint-list-item .irp-breakpoint-list-item-link.icon-new {
-        background-image: url("../img/new.png");
-        background-size: cover;
-        width: 21px; }
 
 .irp-container .ui-resizable {
   position: relative; }
