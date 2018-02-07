@@ -2,13 +2,26 @@
 <ruleset name="Inline Responsive Preview">
 	<description>WordPress Coding Standards for Inline Responsive Preview</description>
 
+	<exclude-pattern>/bin/*</exclude-pattern>
+	<exclude-pattern>/languages/*</exclude-pattern>
+	<exclude-pattern>/node_modules/*</exclude-pattern>
+	<exclude-pattern>/tasks/*</exclude-pattern>
+	<exclude-pattern>/tests/*</exclude-pattern>
+	<exclude-pattern>/vendor/*</exclude-pattern>
+	<exclude-pattern>*.min.js</exclude-pattern>
+
+	<rule ref="WordPress" />
 	<rule ref="WordPress-Core" />
+	<rule ref="WordPress-VIP" />
+	<config name="minimum_supported_wp_version" value="4.6"/>
 	<rule ref="WordPress.WP.I18n">
 		<properties>
 			<property name="text_domain" value="inline-responsive-preview" />
 		</properties>
 	</rule>
 	<rule ref="WordPress-Docs" />
+	<rule ref="Generic.CodeAnalysis.UnusedFunctionParameter"/>
+	<rule ref="Generic.Commenting.Todo"/>
 	<rule ref="Generic.Formatting.MultipleStatementAlignment.NotSameWarning">
 		<severity>0</severity>
 	</rule>
@@ -18,15 +31,4 @@
 	<rule ref="WordPress.Files.FileName">
 		<severity>0</severity>
 	</rule>
-	<arg value="sp"/>
-	<arg name="extensions" value="php"/>
-	<arg name="report" value="full"/>
-	<arg name="report" value="summary"/>
-
-	<exclude-pattern>*/bin/*</exclude-pattern>
-	<exclude-pattern>*/languages/*</exclude-pattern>
-	<exclude-pattern>*/node_modules/*</exclude-pattern>
-	<exclude-pattern>*/tasks/*</exclude-pattern>
-	<exclude-pattern>*/tests/*</exclude-pattern>
-	<exclude-pattern>*/vendor/*</exclude-pattern>
 </ruleset>
