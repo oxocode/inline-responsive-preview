@@ -39,7 +39,7 @@
 	top: 0;
 	text-align: center;
 	transition: width 0.5s ease-in-out;
-	@include z-index(middle);
+	@include z-index(tippy);
 }
 
 .irp-iframe {

@@ -122,6 +122,7 @@ IRP.previews = ( function( $ ) {
 		editorContainer = $( '#wpwrap' ),
 		previewContainer = document.getElementsByClassName( 'irp-container' ),
 		previewButton = document.getElementById( 'post-preview' ),
+		breakpointList = document.getElementsByClassName( 'irp-breakpoint-list' ),
 		wpPublishingActions = document.getElementById( 'minor-publishing-actions' );
 
 	/**
@@ -135,7 +136,6 @@ IRP.previews = ( function( $ ) {
 		$( 'a[id!="post-preview"][href$="preview=true"]' ).on( 'click', function() {
 			IRP.utils.preventDefault();
 			previewButton.click();
-			console.log( 'Preview Button clicked.' );
 		} );
 	};
 
@@ -154,8 +154,6 @@ IRP.previews = ( function( $ ) {
 			previewFrame = document.createElement( 'iframe' );
 			previewFrame.setAttribute( 'class', 'irp-iframe' );
 			previewFrame.setAttribute( 'name', previewFrameName );
-
-			console.log( previewFrame );
 
 			previewContainer = document.createElement( 'div' );
 			previewContainer.setAttribute( 'class', 'irp-container' );
@@ -269,7 +267,7 @@ IRP.previews = ( function( $ ) {
 
 		removeBreakpointListener();
 		$( '.irp-close' ).remove();
-		$( '.irp-breakpoint-list' ).remove();
+		breakpointList.remove();
 
 	};
 
