@@ -16,10 +16,10 @@ Allows users to preview the current post at common responsive breakpoints within
 
 ### Automatic Installation ###
 
-1. Visit 'Plugins > Add New'
+1. Visit `Plugins > Add New`
 2. Search for 'Inline Responsive Preview'
-3. Activate Inline Responsive Preview from your Plugins page.
-4. Go to "After Activation" below.
+3. Activate 'Inline Responsive Preview' from your Plugins page.
+4. Go to 'After Activation' below.
 
 ### Manual Installation ###
 
@@ -28,7 +28,7 @@ Allows users to preview the current post at common responsive breakpoints within
 
 ### After activation ###
 
-1. When you click "Preview Changes" in the dashboard "Add/Edit" screen, a new frame will appear with the current post
+1. When you click 'Preview Changes' in the dashboard 'Add / Edit Post' screen, a new frame will appear with the current post
 you're adding/editing.
 
 ## Frequently Asked Questions ##
