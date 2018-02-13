@@ -2,7 +2,7 @@
 Contributors:      couturefreak
 Donate link:
 Tags:              preview, responsive, inline, post
-Requires at least: 4.0
+Requires at least: 4.6
 Tested up to:      4.8
 Stable tag:        0.1.0
 License:           GPLv2 or later
