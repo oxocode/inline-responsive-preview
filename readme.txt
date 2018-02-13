@@ -33,12 +33,11 @@ you're adding/editing.
 
 == Frequently Asked Questions ==
 
-=== How Do I Add a Custom Post Type? ===
-
-Example:
-```php
-add_post_type_support( '{custom-post-type}', 'inline-responsive-preview' );
-```
++ How Do I Add a Custom Post Type?
+	- Example:
+	```php
+	add_post_type_support( '{custom-post-type}', 'inline-responsive-preview' );
+	```
 
 == Screenshots ==
 
