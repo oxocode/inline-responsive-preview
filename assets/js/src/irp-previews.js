@@ -10,7 +10,9 @@ IRP.previews = ( function( $ ) {
 	'use strict';
 
 	var init,
-		initPreview,
+		triggerPreview,
+		inlineButton,
+		inlineContainer,
 		addCloseButton,
 		checkPreview,
 		closePreview,
@@ -18,50 +20,53 @@ IRP.previews = ( function( $ ) {
 		resetBreakpoint,
 		addControls,
 		removeControls,
+		addButtonListener,
 		addBreakpointListener,
 		removeBreakpointListener,
 		triggerBreakpoint,
 		previewFrame,
+		previewButton,
 		previewFrameName,
 		breakpointContainer,
 		body = document.body,
 		editorContainer = $( '#wpwrap' ),
 		previewContainer = document.getElementsByClassName( 'irp-container' ),
-		previewButton = document.getElementById( 'post-preview' ),
+		previewAction = document.getElementById( 'preview-action' ),
 		wpPublishingActions = document.getElementById( 'minor-publishing-actions' );
 
 	/**
 	 * Set up the handlers to activate responsive preview.
 	 */
 	init = function() {
-		$( 'a[id="post-preview"][href$="preview=true"]' ).on( 'click.irp', function() {
-			initPreview();
-		} );
 
-		$( 'a[id!="post-preview"][href$="preview=true"]' ).on( 'click', function() {
-			IRP.utils.preventDefault();
-			previewButton.click();
-			console.log( 'Preview Button clicked.' );
-		} );
+		// Clone the Preview Button.
+		inlineContainer = previewAction.cloneNode( true );
+		inlineContainer.setAttribute( 'id', 'inline-preview-action' );
+		wpPublishingActions.append( inlineContainer );
+		inlineButton = document.getElementById( 'inline-preview-action' ).getElementsByClassName( 'button' );
+		previewButton = document.getElementById( 'preview-action' ).getElementsByClassName( 'button' );
+		inlineButton[0].setAttribute( 'id', 'inline-preview' );
+		inlineButton[0].setAttribute( 'class', 'inline-preview button' );
+		previewButton[0].setAttribute( 'target', 'wp-preview' );
+
+		addButtonListener();
 	};
 
 	/**
 	 * The user has initiated a preview.
 	 */
-	initPreview = function() {
+	triggerPreview = function() {
 
 		if ( ! checkPreview() ) {
 
 			IRP.utils.addClass( body, 'folded' );
 			IRP.utils.addClass( body, 'irp' );
 
-			previewFrameName = $( '#post-preview' ).attr( 'target' ) || 'wp-preview';
+			previewFrameName = document.getElementById( 'inline-preview' ).getAttribute( 'target' ) || 'wp-preview';
 
 			previewFrame = document.createElement( 'iframe' );
 			previewFrame.setAttribute( 'class', 'irp-iframe' );
 			previewFrame.setAttribute( 'name', previewFrameName );
-
-			console.log( previewFrame );
 
 			previewContainer = document.createElement( 'div' );
 			previewContainer.setAttribute( 'class', 'irp-container' );
@@ -180,6 +185,17 @@ IRP.previews = ( function( $ ) {
 	};
 
 	/**
+	 * Add preview button listener to trigger iframe.
+	 */
+	addButtonListener = function() {
+		var button = document.getElementsByClassName( 'inline-preview' ),
+			i;
+		for ( i = 0; i < button.length; i++ ) {
+			button[i].addEventListener( 'click', triggerPreview );
+		}
+	};
+
+	/**
 	 * Add breakpoint listener to trigger iframe resize.
 	 */
 	addBreakpointListener = function() {
@@ -213,7 +229,7 @@ IRP.previews = ( function( $ ) {
 
 	return {
 		init: init,
-		initPreview: initPreview,
+		triggerPreview: triggerPreview,
 		addControls: addControls,
 		checkPreview: checkPreview,
 		closePreview: closePreview,
