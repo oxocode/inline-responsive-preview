@@ -123,7 +123,7 @@ IRP.previews = ( function( $ ) {
 		previewFrameName,
 		breakpointContainer,
 		body = document.body,
-		editorContainer = $( '#wpwrap' ),
+		editorContainer = document.getElementById( 'wpwrap' ),
 		previewContainer = document.getElementsByClassName( 'irp-container' ),
 		previewAction = document.getElementById( 'preview-action' ),
 		wpPublishingActions = document.getElementById( 'minor-publishing-actions' );
@@ -136,11 +136,13 @@ IRP.previews = ( function( $ ) {
 		// Clone the Preview Button.
 		inlineContainer = previewAction.cloneNode( true );
 		inlineContainer.setAttribute( 'id', 'inline-preview-action' );
+		inlineContainer.setAttribute( 'class', 'inline-preview-action' );
 		wpPublishingActions.append( inlineContainer );
 		inlineButton = document.getElementById( 'inline-preview-action' ).getElementsByClassName( 'button' );
 		previewButton = document.getElementById( 'preview-action' ).getElementsByClassName( 'button' );
 		inlineButton[0].setAttribute( 'id', 'inline-preview' );
 		inlineButton[0].setAttribute( 'class', 'inline-preview button' );
+		inlineButton[0].innerHTML = 'Inline Preview';
 		previewButton[0].setAttribute( 'target', 'wp-preview' );
 
 		addButtonListener();
