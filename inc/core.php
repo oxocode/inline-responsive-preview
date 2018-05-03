@@ -1,6 +1,6 @@
 <?php
 /**
- * Inline Reponsive Preview - Core Functions.
+ * Inline Responsive Preview - Core Functions.
  *
  * @package IRP
  */
