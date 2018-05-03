@@ -27,8 +27,6 @@ function check_wp_version() {
 
 	if ( version_compare( $wp_version, WP_MIN_VERSION, '<=' ) ) {
 		return add_action( 'admin_notices', __NAMESPACE__ . '\\wp_min_version_error' );
-	} else {
-		return add_action( 'admin_notices', __NAMESPACE__ . '\\wp_success' );
 	}
 }
 
@@ -39,19 +37,6 @@ function wp_min_version_error() {
 	$class   = 'notice notice-error';
 	$message = sprintf(
 		'Inline Responsive Preview requires a WordPress version >= %1$s.',
-		WP_MIN_VERSION
-	);
-
-	printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), esc_html( $message ) );
-}
-
-/**
- * Returns admin notice for WP minimum version error.
- */
-function wp_success() {
-	$class   = 'notice notice-success is-dismissible';
-	$message = sprintf(
-		'Inline Responsive Preview is now available when adding or editing a post.',
 		WP_MIN_VERSION
 	);
 
