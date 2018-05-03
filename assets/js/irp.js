@@ -55,7 +55,7 @@ IRP.utils = ( function() {
 
 var IRP = IRP || {};
 
-IRP.previews = ( function( $, IRP ) {
+IRP.previews = (function( $, IRP ) {
 	'use strict';
 
 	var init,
@@ -137,15 +137,15 @@ IRP.previews = ( function( $, IRP ) {
 
 	addCloseButton = function() {
 		previewContainer
-				.append(
-					$( '<a class="irp-close media-modal-close">Close Preview<span' +
-						' class="media-modal-icon"></span></a>' )
-						.on( 'click.irp', function( e ) {
-							IRP.utils.preventDefault( e );
-							closePreview();
-						} )
-						.attr( 'title', InlineResponsivePreview.close_label )
-				);
+			.append(
+				$( '<a class="irp-close media-modal-close">Close Preview<span' +
+					' class="media-modal-icon"></span></a>' )
+					.on( 'click.irp', function( e ) {
+						IRP.utils.preventDefault( e );
+						closePreview();
+					} )
+					.attr( 'title', InlineResponsivePreview.close_label )
+			);
 	};
 
 	/**
@@ -245,8 +245,8 @@ IRP.previews = ( function( $, IRP ) {
 	addButtonListener = function() {
 		var button = document.getElementsByClassName( 'inline-preview' ),
 			i;
-		for ( i = 0; i < button.length; i++ ) {
-			button[i].addEventListener( 'click', triggerPreview );
+		for ( i = 0; i < button.length; i ++ ) {
+			button[ i ].addEventListener( 'click', triggerPreview );
 		}
 	};
 
@@ -256,8 +256,8 @@ IRP.previews = ( function( $, IRP ) {
 	addBreakpointListener = function() {
 		var breakpoint = document.getElementsByClassName( 'irp-breakpoint-list-item-link' ),
 			i;
-		for ( i = 0; i < breakpoint.length; i++ ) {
-			breakpoint[i].addEventListener( 'click', triggerBreakpoint );
+		for ( i = 0; i < breakpoint.length; i ++ ) {
+			breakpoint[ i ].addEventListener( 'click', triggerBreakpoint );
 		}
 	};
 
@@ -267,8 +267,8 @@ IRP.previews = ( function( $, IRP ) {
 	removeBreakpointListener = function() {
 		var breakpoint = document.getElementsByClassName( 'irp-breakpoint-list-item-link' ),
 			i;
-		for ( i = 0; i < breakpoint.length; i++ ) {
-			breakpoint[i].removeEventListener( 'click', triggerBreakpoint );
+		for ( i = 0; i < breakpoint.length; i ++ ) {
+			breakpoint[ i ].removeEventListener( 'click', triggerBreakpoint );
 		}
 	};
 
@@ -292,8 +292,8 @@ IRP.previews = ( function( $, IRP ) {
 		resetBreakpoint: resetBreakpoint,
 		triggerBreakpoint: triggerBreakpoint
 	};
-} ( jQuery, IRP ) );
+}( jQuery, IRP ));
 
-( function() {
+(function() {
 	IRP.previews.init();
-} ( IRP ) );
+}( IRP ));
