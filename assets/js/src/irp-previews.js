@@ -91,8 +91,8 @@ IRP.previews = ( function( $, IRP ) {
 			.append(
 				$( '<a class="irp-close media-modal-close">Close Preview<span' +
 					' class="media-modal-icon"></span></a>' )
-					.on( 'click.irp', function( e ) {
-						IRP.utils.preventDefault( e );
+					.on( 'click.irp', function( element ) {
+						IRP.utils.preventDefault( element );
 						closePreview();
 					} )
 					.attr( 'title', InlineResponsivePreview.close_label )
@@ -229,7 +229,7 @@ IRP.previews = ( function( $, IRP ) {
 	triggerBreakpoint = function( element ) {
 		var size = element.target.getAttribute( 'data-breakpoint' );
 
-		element.preventDefault();
+		IRP.utils.preventDefault( element );
 		setBreakpoint( size );
 	};
 
