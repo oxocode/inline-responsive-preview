@@ -24,6 +24,6 @@ function define_constants() {
 
 	// Minimum WP Version.
 	if ( ! defined( 'WP_MIN_VERSION' ) ) {
-		define( 'WP_MIN_VERSION', '4.2' );
+		define( 'WP_MIN_VERSION', '4.6' );
 	}
 }

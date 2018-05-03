@@ -121,8 +121,6 @@ function supports_irp( $id = null ) {
 		return false;
 	}
 
-	$post_type_object = get_post_type_object( $post->post_type );
-
 	if (
 		(int) get_option( 'page_for_posts' ) !== $post->ID &&
 		post_type_supports( $post->post_type, 'inline-responsive-preview' ) &&

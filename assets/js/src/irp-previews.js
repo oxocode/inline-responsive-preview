@@ -6,12 +6,13 @@
 
 var IRP = IRP || {};
 
-IRP.previews = ( function( $ ) {
+IRP.previews = ( function( $, IRP ) {
 	'use strict';
 
 	var init,
 		triggerPreview,
 		inlineButton,
+		inlineButtonContainer,
 		inlineContainer,
 		addCloseButton,
 		checkPreview,
@@ -26,6 +27,7 @@ IRP.previews = ( function( $ ) {
 		triggerBreakpoint,
 		previewFrame,
 		previewButton,
+		previewButtonContainer,
 		previewFrameName,
 		breakpointContainer,
 		body = document.body,
@@ -44,12 +46,14 @@ IRP.previews = ( function( $ ) {
 		inlineContainer.setAttribute( 'id', 'inline-preview-action' );
 		inlineContainer.setAttribute( 'class', 'inline-preview-action' );
 		wpPublishingActions.append( inlineContainer );
-		inlineButton = document.getElementById( 'inline-preview-action' ).getElementsByClassName( 'button' );
-		previewButton = document.getElementById( 'preview-action' ).getElementsByClassName( 'button' );
-		inlineButton[0].setAttribute( 'id', 'inline-preview' );
-		inlineButton[0].setAttribute( 'class', 'inline-preview button' );
-		inlineButton[0].innerHTML = 'Inline Preview';
-		previewButton[0].setAttribute( 'target', 'wp-preview' );
+		inlineButtonContainer = document.getElementById( 'inline-preview-action' ).getElementsByClassName( 'button' );
+		previewButtonContainer = document.getElementById( 'preview-action' ).getElementsByClassName( 'button' );
+		inlineButton = inlineButtonContainer[ 0 ];
+		previewButton = previewButtonContainer[ 0 ];
+		inlineButton.setAttribute( 'id', 'inline-preview' );
+		inlineButton.setAttribute( 'class', 'inline-preview button' );
+		inlineButton.innerHTML = 'Inline Preview';
+		previewButton.setAttribute( 'target', 'wp-preview' );
 
 		addButtonListener();
 	};
