@@ -63,6 +63,7 @@ IRP.previews = ( function( $, IRP ) {
 		inlineButton,
 		inlineButtonContainer,
 		inlineContainer,
+		closeButton,
 		addCloseButton,
 		checkPreview,
 		closePreview,
@@ -70,9 +71,11 @@ IRP.previews = ( function( $, IRP ) {
 		resetBreakpoint,
 		addControls,
 		removeControls,
-		addButtonListener,
+		addPreviewListener,
 		addBreakpointListener,
+		addCloseListener,
 		removeBreakpointListener,
+		removeCloseListener,
 		triggerBreakpoint,
 		previewFrame,
 		previewButton,
@@ -104,7 +107,7 @@ IRP.previews = ( function( $, IRP ) {
 		inlineButton.innerHTML = 'Inline Preview';
 		previewButton.setAttribute( 'target', 'wp-preview' );
 
-		addButtonListener();
+		addPreviewListener();
 	};
 
 	/**
@@ -136,16 +139,13 @@ IRP.previews = ( function( $, IRP ) {
 	};
 
 	addCloseButton = function() {
-		previewContainer
-			.append(
-				$( '<a class="irp-close media-modal-close">Close Preview<span' +
-					' class="media-modal-icon"></span></a>' )
-					.on( 'click.irp', function( element ) {
-						IRP.utils.preventDefault( element );
-						closePreview();
-					} )
-					.attr( 'title', InlineResponsivePreview.close_label )
-			);
+		closeButton = document.createElement( 'a' );
+		closeButton.setAttribute( 'class', 'irp-close' );
+		closeButton.setAttribute( 'title', InlineResponsivePreview.close_label );
+		closeButton.innerHTML = 'Close Preview';
+		console.log( previewContainer );
+		previewContainer.append( closeButton );
+		addCloseListener();
 	};
 
 	/**
@@ -242,11 +242,22 @@ IRP.previews = ( function( $, IRP ) {
 	/**
 	 * Add preview button listener to trigger iframe.
 	 */
-	addButtonListener = function() {
+	addPreviewListener = function() {
 		var button = document.getElementsByClassName( 'inline-preview' ),
 			i;
 		for ( i = 0; i < button.length; i++ ) {
 			button[i].addEventListener( 'click', triggerPreview );
+		}
+	};
+
+	/**
+	 * Add close button listener to trigger iframe.
+	 */
+	addCloseListener = function() {
+		var button = document.getElementsByClassName( 'irp-close' ),
+			i;
+		for ( i = 0; i < button.length; i++ ) {
+			button[i].addEventListener( 'click', closePreview );
 		}
 	};
 
@@ -269,6 +280,17 @@ IRP.previews = ( function( $, IRP ) {
 			i;
 		for ( i = 0; i < breakpoint.length; i++ ) {
 			breakpoint[i].removeEventListener( 'click', triggerBreakpoint );
+		}
+	};
+
+	/**
+	 * Add preview button listener to trigger iframe.
+	 */
+	removeCloseListener = function() {
+		var button = document.getElementsByClassName( 'irp-close' ),
+			i;
+		for ( i = 0; i < button.length; i++ ) {
+			button[i].removeEventListener( 'click', closePreview );
 		}
 	};
 
