@@ -5,6 +5,8 @@
  * @package IRP
  */
 
+namespace IRP;
+
 /**
  * Setup IRP Core functions.
  */
@@ -21,10 +23,12 @@ function setup() {
  * Check WP Core Version based on WP_MIN_VERSION constant.
  */
 function check_wp_version() {
-	$wp_version = (int) get_bloginfo( 'version' );
+	$wp_version = get_bloginfo( 'version' );
 
-	if ( version_compare( (int) 'WP_MIN_VERSION', $wp_version, '>' ) ) {
+	if ( version_compare( $wp_version, WP_MIN_VERSION, '<=' ) ) {
 		return add_action( 'admin_notices', __NAMESPACE__ . '\\wp_min_version_error' );
+	} else {
+		return add_action( 'admin_notices', __NAMESPACE__ . '\\wp_success' );
 	}
 }
 
@@ -34,7 +38,7 @@ function check_wp_version() {
 function wp_min_version_error() {
 	$class   = 'notice notice-error';
 	$message = sprintf(
-		'Inline Responsive Preview requires WordPress version %1$s.',
+		'Inline Responsive Preview requires a WordPress version >= %1$s.',
 		WP_MIN_VERSION
 	);
 
@@ -45,9 +49,9 @@ function wp_min_version_error() {
  * Returns admin notice for WP minimum version error.
  */
 function wp_success() {
-	$class   = 'notice notice-success';
+	$class   = 'notice notice-success is-dismissible';
 	$message = sprintf(
-		'Inline Responsive Preview requires WordPress version %1$s.',
+		'Inline Responsive Preview is now available when adding or editing a post.',
 		WP_MIN_VERSION
 	);
 

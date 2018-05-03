@@ -17,6 +17,11 @@ require_once( __DIR__ . '/constants.php' );
 require_once( __DIR__ . '/inc/core.php' );
 
 /**
+ * Define IRP constants.
+ */
+define_constants();
+
+/**
  * Lock and load.
  */
 setup();
