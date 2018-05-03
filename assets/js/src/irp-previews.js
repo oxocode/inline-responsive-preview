@@ -88,15 +88,15 @@ IRP.previews = ( function( $, IRP ) {
 
 	addCloseButton = function() {
 		previewContainer
-				.append(
-					$( '<a class="irp-close media-modal-close">Close Preview<span' +
-						' class="media-modal-icon"></span></a>' )
-						.on( 'click.irp', function( e ) {
-							IRP.utils.preventDefault( e );
-							closePreview();
-						} )
-						.attr( 'title', InlineResponsivePreview.close_label )
-				);
+			.append(
+				$( '<a class="irp-close media-modal-close">Close Preview<span' +
+					' class="media-modal-icon"></span></a>' )
+					.on( 'click.irp', function( e ) {
+						IRP.utils.preventDefault( e );
+						closePreview();
+					} )
+					.attr( 'title', InlineResponsivePreview.close_label )
+			);
 	};
 
 	/**
