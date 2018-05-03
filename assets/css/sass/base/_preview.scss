@@ -56,42 +56,18 @@
 }
 
 .irp-close {
-	@include z-index(tippy);
+	@include z-index(top);
 	position: absolute;
-	top: 3em;
-	right: 1em;
-	padding: 0.5em;
+	bottom: 0;
+	left: 0;
+	width: 98%;
+	padding: 1em;
 	background-color: $color--red;
-	border-radius: $border--radius;
 	color: $color--white;
+	border-left: 1px solid $color--silver;
 	cursor: pointer;
-	&.media-modal-close {
-		width: 140px;
-		height: 20px;
-		margin: 0 0 0 0.5em;
-		vertical-align: text-bottom;
-		&:hover {
-			background-color: $color--black;
-		}
+	&:hover {
+		background-color: $color--black;
+		color: $color--white;
 	}
-}
-
-.irp-new {
-	padding: 0.5em;
-	background-color: $color--red;
-	border-radius: $border--radius;
-	color: $color--white;
-	cursor: pointer;
-	&.media-modal-close {
-		width: auto;
-		height: 20px;
-		margin: 0 0 0 0.5em;
-		vertical-align: text-bottom;
-		&:hover {
-			background-color: $color--black;
-		}
-	}
-}
-.full-width {
-	width: 100%;
 }

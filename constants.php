@@ -27,4 +27,3 @@ function define_constants() {
 		define( 'WP_MIN_VERSION', '4.6' );
 	}
 }
-add_action( 'admin_init', __NAMESPACE__ . '\\define_constants' );

@@ -42,37 +42,17 @@
 .irp-close {
   z-index: 99999;
   position: absolute;
-  top: 3em;
-  right: 1em;
-  padding: 0.5em;
+  bottom: 0;
+  left: 0;
+  width: 98%;
+  padding: 1em;
   background-color: #e14d43;
-  border-radius: 3px;
   color: #fafafa;
+  border-left: 1px solid #ccc;
   cursor: pointer; }
-  .irp-close.media-modal-close {
-    width: 140px;
-    height: 20px;
-    margin: 0 0 0 0.5em;
-    vertical-align: text-bottom; }
-    .irp-close.media-modal-close:hover {
-      background-color: #222; }
-
-.irp-new {
-  padding: 0.5em;
-  background-color: #e14d43;
-  border-radius: 3px;
-  color: #fafafa;
-  cursor: pointer; }
-  .irp-new.media-modal-close {
-    width: auto;
-    height: 20px;
-    margin: 0 0 0 0.5em;
-    vertical-align: text-bottom; }
-    .irp-new.media-modal-close:hover {
-      background-color: #222; }
-
-.full-width {
-  width: 100%; }
+  .irp-close:hover {
+    background-color: #222;
+    color: #fafafa; }
 
 .irp-controls-container {
   z-index: 1000;

@@ -7,23 +7,9 @@ var IRP = IRP || {};
 IRP.utils = ( function() {
 	'use strict';
 
-	var _$, addEventListener, each, addClass, removeClass, init, preventDefault, ready, removeElement;
+	var addClass, removeClass, init, preventDefault;
 
 	init = function() {};
-
-	_$ = function( selector ) {
-		return document.querySelectorAll( selector );
-	};
-
-	addEventListener = function( element, eventName, handler ) {
-		if ( element.addEventListener ) {
-			element.addEventListener( eventName, handler );
-		} else {
-			element.attachEvent( 'on' + eventName, function() {
-				handler.call( element );
-			} );
-		}
-	};
 
 	addClass = function( element, className ) {
 		if ( ! element.classList.contains( className ) ) {
@@ -34,13 +20,6 @@ IRP.utils = ( function() {
 	removeClass = function( element, className ) {
 		if ( element.classList.contains( className ) ) {
 			element.classList.remove( className );
-		}
-	};
-
-	each = function( elements, fn ) {
-		var i = 0;
-		for ( i < elements.length; i++; ) {
-			fn( elements[ i ], i );
 		}
 	};
 
@@ -55,35 +34,11 @@ IRP.utils = ( function() {
 		return evt.currentTarget || evt.srcElement;
 	};
 
-	ready = function( fn ) {
-		if ( 'loading' !== document.readyState ) {
-			fn();
-		} else if ( document.addEventListener ) {
-			document.addEventListener( 'DOMContentLoaded', fn );
-		} else {
-			document.attachEvent( 'onreadystatechange', function() {
-				if ( 'loading' !== document.readyState ) {
-					fn();
-				}
-			} );
-		}
-	};
-
-	removeElement = function( elementId ) {
-		var element = document.getElementsByClassName( elementId );
-		element.parentNode.removeChild( element );
-	};
-
 	return {
 		init: init,
-		_$: _$,
-		addEventListener: addEventListener,
-		each: each,
 		removeClass: removeClass,
 		addClass: addClass,
-		preventDefault: preventDefault,
-		ready: ready,
-		removeElement: removeElement
+		preventDefault: preventDefault
 	};
 
 } ( IRP ) );
@@ -100,13 +55,15 @@ IRP.utils = ( function() {
 
 var IRP = IRP || {};
 
-IRP.previews = ( function( $ ) {
+IRP.previews = ( function( $, IRP ) {
 	'use strict';
 
 	var init,
 		triggerPreview,
 		inlineButton,
+		inlineButtonContainer,
 		inlineContainer,
+		closeButton,
 		addCloseButton,
 		checkPreview,
 		closePreview,
@@ -114,12 +71,15 @@ IRP.previews = ( function( $ ) {
 		resetBreakpoint,
 		addControls,
 		removeControls,
-		addButtonListener,
+		addPreviewListener,
 		addBreakpointListener,
+		addCloseListener,
 		removeBreakpointListener,
+		removeCloseListener,
 		triggerBreakpoint,
 		previewFrame,
 		previewButton,
+		previewButtonContainer,
 		previewFrameName,
 		breakpointContainer,
 		body = document.body,
@@ -138,14 +98,16 @@ IRP.previews = ( function( $ ) {
 		inlineContainer.setAttribute( 'id', 'inline-preview-action' );
 		inlineContainer.setAttribute( 'class', 'inline-preview-action' );
 		wpPublishingActions.append( inlineContainer );
-		inlineButton = document.getElementById( 'inline-preview-action' ).getElementsByClassName( 'button' );
-		previewButton = document.getElementById( 'preview-action' ).getElementsByClassName( 'button' );
-		inlineButton[0].setAttribute( 'id', 'inline-preview' );
-		inlineButton[0].setAttribute( 'class', 'inline-preview button' );
-		inlineButton[0].innerHTML = 'Inline Preview';
-		previewButton[0].setAttribute( 'target', 'wp-preview' );
+		inlineButtonContainer = document.getElementById( 'inline-preview-action' ).getElementsByClassName( 'button' );
+		previewButtonContainer = document.getElementById( 'preview-action' ).getElementsByClassName( 'button' );
+		inlineButton = inlineButtonContainer[ 0 ];
+		previewButton = previewButtonContainer[ 0 ];
+		inlineButton.setAttribute( 'id', 'inline-preview' );
+		inlineButton.setAttribute( 'class', 'inline-preview button' );
+		inlineButton.innerHTML = 'Inline Preview';
+		previewButton.setAttribute( 'target', 'wp-preview' );
 
-		addButtonListener();
+		addPreviewListener();
 	};
 
 	/**
@@ -177,16 +139,13 @@ IRP.previews = ( function( $ ) {
 	};
 
 	addCloseButton = function() {
-		previewContainer
-				.append(
-					$( '<a class="irp-close media-modal-close">Close Preview<span' +
-						' class="media-modal-icon"></span></a>' )
-						.on( 'click.irp', function( e ) {
-							IRP.utils.preventDefault( e );
-							closePreview();
-						} )
-						.attr( 'title', InlineResponsivePreview.close_label )
-				);
+		closeButton = document.createElement( 'a' );
+		closeButton.setAttribute( 'class', 'irp-close' );
+		closeButton.setAttribute( 'title', InlineResponsivePreview.close_label );
+		closeButton.innerHTML = 'Close Preview';
+		console.log( previewContainer );
+		previewContainer.append( closeButton );
+		addCloseListener();
 	};
 
 	/**
@@ -283,11 +242,22 @@ IRP.previews = ( function( $ ) {
 	/**
 	 * Add preview button listener to trigger iframe.
 	 */
-	addButtonListener = function() {
+	addPreviewListener = function() {
 		var button = document.getElementsByClassName( 'inline-preview' ),
 			i;
 		for ( i = 0; i < button.length; i++ ) {
 			button[i].addEventListener( 'click', triggerPreview );
+		}
+	};
+
+	/**
+	 * Add close button listener to trigger iframe.
+	 */
+	addCloseListener = function() {
+		var button = document.getElementsByClassName( 'irp-close' ),
+			i;
+		for ( i = 0; i < button.length; i++ ) {
+			button[i].addEventListener( 'click', closePreview );
 		}
 	};
 
@@ -314,12 +284,23 @@ IRP.previews = ( function( $ ) {
 	};
 
 	/**
+	 * Add preview button listener to trigger iframe.
+	 */
+	removeCloseListener = function() {
+		var button = document.getElementsByClassName( 'irp-close' ),
+			i;
+		for ( i = 0; i < button.length; i++ ) {
+			button[i].removeEventListener( 'click', closePreview );
+		}
+	};
+
+	/**
 	 * Triggers the resizing of the iframe, based on the breakpoint size.
 	 */
 	triggerBreakpoint = function( element ) {
 		var size = element.target.getAttribute( 'data-breakpoint' );
 
-		element.preventDefault();
+		IRP.utils.preventDefault( element );
 		setBreakpoint( size );
 	};
 
