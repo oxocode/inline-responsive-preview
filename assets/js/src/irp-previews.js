@@ -10,10 +10,11 @@ IRP.previews = ( function( $, IRP, wp ) {
 	'use strict';
 
 	var init,
+		addPreviewButton,
+		reAddPreviewButton,
 		triggerPreview,
 		inlineButton,
 		inlineButtonContainer,
-		inlineContainer,
 		closeButton,
 		addCloseButton,
 		checkPreview,
@@ -23,6 +24,7 @@ IRP.previews = ( function( $, IRP, wp ) {
 		addControls,
 		removeControls,
 		addPreviewListener,
+		removePreviewListener,
 		addBreakpointListener,
 		addCloseListener,
 		removeBreakpointListener,
@@ -36,6 +38,7 @@ IRP.previews = ( function( $, IRP, wp ) {
 		breakpointContainer,
 		body = document.body,
 		editorContainer = document.getElementById( 'wpwrap' ),
+		inlineContainer = document.getElementsByClassName( 'inline-preview-action' ),
 		previewContainer = document.getElementsByClassName( 'irp-container' ),
 		previewAction = document.getElementById( 'preview-action' ),
 		wpPublishingActions = document.getElementById( 'minor-publishing-actions' );
@@ -45,21 +48,38 @@ IRP.previews = ( function( $, IRP, wp ) {
 	 */
 	init = function() {
 
-		// Clone the Preview Button.
-		inlineContainer = previewAction.cloneNode( true );
-		inlineContainer.setAttribute( 'id', 'inline-preview-action' );
-		inlineContainer.setAttribute( 'class', 'inline-preview-action' );
-		wpPublishingActions.append( inlineContainer );
-		inlineButtonContainer = document.getElementById( 'inline-preview-action' ).getElementsByClassName( 'button' );
-		previewButtonContainer = document.getElementById( 'preview-action' ).getElementsByClassName( 'button' );
-		inlineButton = inlineButtonContainer[ 0 ];
-		previewButton = previewButtonContainer[ 0 ];
-		inlineButton.setAttribute( 'id', 'inline-preview' );
-		inlineButton.setAttribute( 'class', 'inline-preview button' );
-		inlineButton.innerHTML = 'Inline Preview';
-		previewButton.setAttribute( 'target', 'wp-preview' );
+		addPreviewButton();
+	};
 
-		addPreviewListener();
+	/**
+	 * Adds preview button.
+	 */
+	addPreviewButton = function() {
+
+		if ( ! inlineContainer.length ) {
+			inlineContainer = previewAction.cloneNode( true );
+			inlineContainer.setAttribute( 'id', 'inline-preview-action' );
+			inlineContainer.setAttribute( 'class', 'inline-preview-action' );
+			wpPublishingActions.append( inlineContainer );
+			inlineButtonContainer = document.getElementById( 'inline-preview-action' ).getElementsByClassName( 'button' );
+			previewButtonContainer = document.getElementById( 'preview-action' ).getElementsByClassName( 'button' );
+			inlineButton = inlineButtonContainer[ 0 ];
+			previewButton = previewButtonContainer[ 0 ];
+			inlineButton.setAttribute( 'id', 'inline-preview' );
+			inlineButton.setAttribute( 'class', 'inline-preview button' );
+			inlineButton.innerHTML = 'Inline Preview';
+			previewButton.setAttribute( 'target', 'wp-preview' );
+			addPreviewListener();
+		}
+	};
+
+	/**
+	 * Remove preview button.
+	 */
+	reAddPreviewButton = function() {
+		inlineContainer.remove();
+		removePreviewListener();
+		addPreviewButton();
 	};
 
 	/**
@@ -153,6 +173,7 @@ IRP.previews = ( function( $, IRP, wp ) {
 
 		resetBreakpoint();
 		removeControls();
+		reAddPreviewButton();
 
 		return false;
 	};
@@ -208,6 +229,17 @@ IRP.previews = ( function( $, IRP, wp ) {
 			i;
 		for ( i = 0; i < button.length; i++ ) {
 			button[i].addEventListener( 'click', triggerPreview );
+		}
+	};
+
+	/**
+	 * Remove preview button listener to trigger iframe.
+	 */
+	removePreviewListener = function() {
+		var button = document.getElementsByClassName( 'inline-preview' ),
+			i;
+		for ( i = 0; i < button.length; i++ ) {
+			button[i].removeEventListener( 'click', triggerPreview );
 		}
 	};
 
