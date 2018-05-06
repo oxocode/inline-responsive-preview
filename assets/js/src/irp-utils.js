@@ -7,7 +7,7 @@ var IRP = IRP || {};
 IRP.utils = ( function() {
 	'use strict';
 
-	var addClass, removeClass, init, preventDefault;
+	var addClass, removeClass, init, removeElement, preventDefault;
 
 	init = function() {};
 
@@ -23,6 +23,11 @@ IRP.utils = ( function() {
 		}
 	};
 
+	removeElement = function( element ) {
+		console.log( element );
+		element.parentNode.removeChild( element );
+	};
+
 	preventDefault = function( e ) {
 		var evt = e || window.event; // IE8 compatibility
 		if ( evt.preventDefault ) {
@@ -36,6 +41,7 @@ IRP.utils = ( function() {
 
 	return {
 		init: init,
+		removeElement: removeElement,
 		removeClass: removeClass,
 		addClass: addClass,
 		preventDefault: preventDefault

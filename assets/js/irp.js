@@ -7,7 +7,7 @@ var IRP = IRP || {};
 IRP.utils = ( function() {
 	'use strict';
 
-	var addClass, removeClass, init, preventDefault;
+	var addClass, removeClass, init, removeElement, preventDefault;
 
 	init = function() {};
 
@@ -23,6 +23,11 @@ IRP.utils = ( function() {
 		}
 	};
 
+	removeElement = function( element ) {
+		console.log( element );
+		element.parentNode.removeChild( element );
+	};
+
 	preventDefault = function( e ) {
 		var evt = e || window.event; // IE8 compatibility
 		if ( evt.preventDefault ) {
@@ -36,6 +41,7 @@ IRP.utils = ( function() {
 
 	return {
 		init: init,
+		removeElement: removeElement,
 		removeClass: removeClass,
 		addClass: addClass,
 		preventDefault: preventDefault
@@ -51,11 +57,11 @@ IRP.utils = ( function() {
  * Inline Responsive Preview.
  */
 
-/* global jQuery, InlineResponsivePreview */
+/* global jQuery, InlineResponsivePreview, wp */
 
 var IRP = IRP || {};
 
-IRP.previews = ( function( $, IRP ) {
+IRP.previews = ( function( $, IRP, wp ) {
 	'use strict';
 
 	var init,
@@ -78,6 +84,7 @@ IRP.previews = ( function( $, IRP ) {
 		removeCloseListener,
 		triggerBreakpoint,
 		previewFrame,
+		previewTarget,
 		previewButton,
 		previewButtonContainer,
 		previewFrameName,
@@ -119,7 +126,6 @@ IRP.previews = ( function( $, IRP ) {
 
 			IRP.utils.addClass( body, 'folded' );
 			IRP.utils.addClass( body, 'irp' );
-
 			previewFrameName = document.getElementById( 'inline-preview' ).getAttribute( 'target' ) || 'wp-preview';
 
 			previewFrame = document.createElement( 'iframe' );
@@ -135,7 +141,17 @@ IRP.previews = ( function( $, IRP ) {
 			setBreakpoint( 'small' );
 			addControls();
 
+		} else {
+
+			IRP.utils.preventDefault();
+
+			// Simulate post preview click to reload inline preview frame.
+			previewTarget = document.getElementById( 'inline-preview' ).getAttribute( 'target' ) || 'wp-preview';
+			$( '#post-preview' ).attr( 'target', previewTarget );
+			$( '#post-preview' ).click();
+			$( '#post-preview' ).attr( 'target', 'wp-preview' );
 		}
+
 	};
 
 	addCloseButton = function() {
@@ -143,7 +159,7 @@ IRP.previews = ( function( $, IRP ) {
 		closeButton.setAttribute( 'class', 'irp-close' );
 		closeButton.setAttribute( 'title', InlineResponsivePreview.close_label );
 		closeButton.innerHTML = 'Close Preview';
-		console.log( previewContainer );
+
 		previewContainer.append( closeButton );
 		addCloseListener();
 	};
@@ -314,7 +330,7 @@ IRP.previews = ( function( $, IRP ) {
 		resetBreakpoint: resetBreakpoint,
 		triggerBreakpoint: triggerBreakpoint
 	};
-} ( jQuery, IRP ) );
+} ( jQuery, IRP, wp ) );
 
 ( function() {
 	IRP.previews.init();
